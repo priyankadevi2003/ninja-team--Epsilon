@@ -5,9 +5,7 @@ This project demonstrates a simple React Native application that generates and d
 ## Team Members
 
 - **Nitika** – Project setup, README, and CouponData component  
-- **Diksha** – CouponDisplay component (static coupon layout)  
 - **Priyanka Devi** – RandomCouponGenerator (uses Math.random())  
-- **Aditya** – Layout design and styling (Flexbox and colors)
 
 ## Features
 
