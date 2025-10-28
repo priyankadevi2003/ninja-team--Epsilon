@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ninja Team - Epsilon
 
 This repository contains an Expo-based React Native application.
@@ -31,3 +32,10 @@ npx expo start
 -  priyankadevi
    nitika 
 - Project: ninja-team--Epsilon
+=======
+# ninja-team-Epsilon
+
+# Introduction
+Hi, I am Priyanka Choudhary.
+This is my branch for contributions in the Epsilon team project.
+>>>>>>> priyanka
