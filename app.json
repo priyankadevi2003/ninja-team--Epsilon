@@ -1,20 +1,11 @@
 {
   "expo": {
-<<<<<<< HEAD
     "name": "GenerateCoupon",
     "slug": "GenerateCoupon",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "generatecoupon",
-=======
-    "name": "CouponGenerator",
-    "slug": "CouponGenerator",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "coupongenerator",
->>>>>>> 1a8bf66e14fbd10aca9f7f5e086a0853f6e40a66
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
