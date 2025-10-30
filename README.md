@@ -1,38 +1,19 @@
-# Ninja Team - Epsilon
+#  Coupon Generator App
 
-This repository contains an Expo-based React Native application.
+This project demonstrates a simple React Native application that generates and displays coupon codes.
 
-## Project Structure
+## Team Members
 
-- `my-app/` - Main Expo application directory
-  - `app/` - Application screens and navigation
-  - `components/` - Reusable React components
-  - `assets/` - Images and other static assets
-  - `constants/` - Theme and other constant values
+- **Nitika** – Project setup, README, and CouponData component  
+- **Priyanka Devi** – RandomCouponGenerator (uses Math.random())  
 
-## Getting Started
+## Features
 
-1. Navigate to the app directory:
+- Displays static coupon information  
+- Generates random coupon codes  
+- Simple, colorful layout  
+
+## How to Run
+
 ```bash
-cd my-app
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npx expo start
-```
-
-## Repository Information
--  priyankadevi
-   nitika 
-- Project: ninja-team--Epsilon
-# ninja-team-Epsilon
-
-# Introduction
-Hi, I am Priyanka Choudhary.
-This is my branch for contributions in the Epsilon team project.
+npm start
