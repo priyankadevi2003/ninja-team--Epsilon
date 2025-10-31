@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import CouponData from "../coupon/components/CouponData";
 import CouponDisplay from "../coupon/components/CouponDisplay";
-// import RandomCouponGenerator from "../components/RandomCouponGenerator"; // Future feature
+import RandomCouponGenerator from "../coupon/components/RandomCouponGenerator";
 
 interface Coupon {
   code: string;
@@ -38,12 +38,10 @@ export default function App() {
         <CouponData onAddCoupon={handleAddCoupon} />
       </View>
 
-      {/* Future Feature: Random Coupon Generator */}
+      {/* Random Coupon Generator Section */}
       <View style={styles.section}>
-        <Text style={styles.infoText}>
-          🚧 Random Coupon Generator feature (by Priyanka) coming soon! 🚀
-        </Text>
-        {/* <RandomCouponGenerator /> */}
+        <Text style={styles.sectionTitle}>🎲 Random Coupon Generator</Text>
+        <RandomCouponGenerator onGenerate={handleAddCoupon} />
       </View>
 
       {/* Footer */}

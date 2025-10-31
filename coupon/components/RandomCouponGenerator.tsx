@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
-import layoutStyles from "./styles/layoutStyles";
-import textStyles from "./styles/textStyles";
+import React, { useEffect, useState } from "react";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import buttonStyles from "./styles/buttonStyles";
 import colors from "./styles/colors";
+import layoutStyles from "./styles/layoutStyles";
+import textStyles from "./styles/textStyles";
 
-export default function RandomCouponGenerator() {
+interface RandomCouponGeneratorProps {
+  onGenerate: (coupon: { code: string; discount: string; status: string }) => void;
+}
+
+export default function RandomCouponGenerator({ onGenerate }: RandomCouponGeneratorProps) {
   const [coupon, setCoupon] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
 
@@ -13,6 +17,16 @@ export default function RandomCouponGenerator() {
   const generateCoupon = () => {
     const newCoupon = Math.random().toString(36).substring(2, 10).toUpperCase();
     setCoupon(newCoupon);
+    
+    // Generate a random discount between 5 and 50
+    const randomDiscount = Math.floor(Math.random() * 46 + 5).toString();
+    
+    // Pass the generated coupon to parent
+    onGenerate({
+      code: newCoupon,
+      discount: randomDiscount,
+      status: "✅ Valid"
+    });
   };
 
   // Validation effect: check coupon length
