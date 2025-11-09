@@ -1,52 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-
-import CouponData from "../coupon/components/CouponData";
 import CouponDisplay from "../coupon/components/CouponDisplay";
+import CouponData from "../coupon/components/CouponData";
 import RandomCouponGenerator from "../coupon/components/RandomCouponGenerator";
-
-interface Coupon {
-  code: string;
-  discount: string;
-  status: string;
-}
+import { CouponProvider } from "../context/CouponContext"; // ✅ Context wrapper
 
 export default function App() {
-  const [coupons, setCoupons] = useState<Coupon[]>([]);
-
-  // Add new coupon dynamically
-  const handleAddCoupon = (newCoupon: Coupon) => {
-    setCoupons((prevCoupons) => [...prevCoupons, newCoupon]);
-  };
-
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Header */}
-      <Text style={styles.header}>🎟 Coupon Generator App</Text>
-      <Text style={styles.subHeader}>
-        Welcome to your Coupon Center! Explore exciting offers below 👇
-      </Text>
+    <CouponProvider>
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* Header Section */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>🎟 Coupon Generator App</Text>
+          <Text style={styles.subHeader}>
+            Welcome to your Coupon Center! Explore exciting offers below 👇
+          </Text>
+        </View>
 
-      {/* Coupon Display Section */}
-      <View style={styles.section}>
-        <CouponDisplay coupons={coupons} />
-      </View>
+        {/* Coupon Display */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>💥 Active Coupons</Text>
+          <CouponDisplay />
+        </View>
 
-      {/* Coupon Data Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>💾 Coupon Data</Text>
-        <CouponData onAddCoupon={handleAddCoupon} />
-      </View>
+        {/* Coupon Data (Manual Creation) */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>💾 Create Custom Coupon</Text>
+          <CouponData />
+        </View>
 
-      {/* Random Coupon Generator Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>🎲 Random Coupon Generator</Text>
-        <RandomCouponGenerator onGenerate={handleAddCoupon} />
-      </View>
+        {/* Random Coupon Generator */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>🎲 Random Coupon Generator</Text>
+          <RandomCouponGenerator />
+        </View>
 
-      {/* Footer */}
-      <Text style={styles.footer}>Developed by Team Ninja – Epsilon 💪</Text>
-    </ScrollView>
+        {/* Footer */}
+        <Text style={styles.footer}>Developed by Team Ninja – Epsilon 💪</Text>
+      </ScrollView>
+    </CouponProvider>
   );
 }
 
@@ -58,6 +50,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0F8FF",
     padding: 20,
   },
+  headerContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
   header: {
     fontSize: 28,
     fontWeight: "bold",
@@ -68,7 +64,6 @@ const styles = StyleSheet.create({
   subHeader: {
     fontSize: 16,
     color: "#333",
-    marginBottom: 20,
     textAlign: "center",
   },
   section: {
@@ -87,11 +82,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#444",
     marginBottom: 10,
-    textAlign: "center",
-  },
-  infoText: {
-    fontSize: 16,
-    color: "#666",
     textAlign: "center",
   },
   footer: {

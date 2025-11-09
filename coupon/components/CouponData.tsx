@@ -1,26 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
+import { useCoupons } from "../../context/CouponContext"; // ✅ import context hook
 
-interface Coupon {
-  code: string;
-  discount: string;
-  status: string;
-}
-
-interface CouponDataProps {
-  onAddCoupon: (coupon: Coupon) => void;
-}
-
-export default function CouponData({ onAddCoupon }: CouponDataProps) {
+export default function CouponData() {
   const [discount, setDiscount] = useState("");
   const [code, setCode] = useState("");
+  const { addCoupon } = useCoupons(); // ✅ get addCoupon from context
 
   // Generate random coupon code
   const generateRandomCode = () => {
@@ -29,8 +21,8 @@ export default function CouponData({ onAddCoupon }: CouponDataProps) {
     setCode(randomCode);
   };
 
-  // Add coupon and pass to parent
-  const addCoupon = () => {
+  // Add coupon using context
+  const handleAddCoupon = () => {
     if (!code || !discount) {
       alert("⚠ Please generate a code and enter discount");
       return;
@@ -42,9 +34,7 @@ export default function CouponData({ onAddCoupon }: CouponDataProps) {
       status: "✅ Valid",
     };
 
-    if (onAddCoupon) {
-      onAddCoupon(newCoupon);
-    }
+    addCoupon(newCoupon); // ✅ add to global state
 
     setCode("");
     setDiscount("");
@@ -74,7 +64,7 @@ export default function CouponData({ onAddCoupon }: CouponDataProps) {
         <Text style={styles.generatedCode}>Generated Code: {code}</Text>
       ) : null}
 
-      <TouchableOpacity style={styles.buttonGreen} onPress={addCoupon}>
+      <TouchableOpacity style={styles.buttonGreen} onPress={handleAddCoupon}>
         <Text style={styles.buttonText}>Add Coupon</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
