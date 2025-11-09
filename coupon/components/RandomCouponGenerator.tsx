@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
-import { useCoupons } from "../../context/CouponContext"; // ✅ import context hook
+import { useCouponContext } from "../../context/CouponContext"; // ✅ import context hook
 import buttonStyles from "./styles/buttonStyles";
 import colors from "./styles/colors";
 import layoutStyles from "./styles/layoutStyles";
@@ -9,7 +9,7 @@ import textStyles from "./styles/textStyles";
 export default function RandomCouponGenerator() {
   const [coupon, setCoupon] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
-  const { addCoupon } = useCoupons(); // ✅ use context function
+  const { addToCouponHistory } = useCouponContext(); // ✅ use context function
 
   // Generate random 8-character coupon
   const generateCoupon = () => {
@@ -19,11 +19,10 @@ export default function RandomCouponGenerator() {
     // Random discount between 5–50%
     const randomDiscount = Math.floor(Math.random() * 46 + 5).toString();
 
-    // Add to global coupon list
-    addCoupon({
+    // Add to global coupon list (convert discount to number)
+    addToCouponHistory({
       code: newCoupon,
-      discount: randomDiscount,
-      status: "✅ Valid",
+      discount: Number(randomDiscount),
     });
 
     Alert.alert("🎉 Coupon Generated", `Code: ${newCoupon} | Discount: ${randomDiscount}%`);

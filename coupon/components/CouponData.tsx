@@ -7,12 +7,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { useCoupons } from "../../context/CouponContext"; // ✅ import context hook
+import { useCouponContext } from "../../context/CouponContext"; // ✅ import context hook
 
 export default function CouponData() {
   const [discount, setDiscount] = useState("");
   const [code, setCode] = useState("");
-  const { addCoupon } = useCoupons(); // ✅ get addCoupon from context
+  const { addToCouponHistory } = useCouponContext(); // ✅ get addToCouponHistory from context
 
   // Generate random coupon code
   const generateRandomCode = () => {
@@ -30,11 +30,10 @@ export default function CouponData() {
 
     const newCoupon = {
       code,
-      discount,
-      status: "✅ Valid",
+      discount: Number(discount),
     };
 
-    addCoupon(newCoupon); // ✅ add to global state
+    addToCouponHistory(newCoupon); // add to global state
 
     setCode("");
     setDiscount("");
