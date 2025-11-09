@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useCoupons } from "../../context/CouponContext";
+import { useCouponContext } from "../../context/CouponContext";
 
 interface Props {
   coupons?: Array<{ code: string; discount: string; status: string }>;
@@ -8,8 +8,13 @@ interface Props {
 
 export default function CouponDisplay({ coupons: propCoupons }: Props = {}) {
   // Try to get coupons from context, fallback to props
-  const context = useCoupons();
-  const coupons = context?.coupons || propCoupons || [];
+  const context = useCouponContext();
+  // the context exposes `couponHistory` and `generatedCoupon`; use couponHistory
+  const coupons = context?.couponHistory?.map((c: { code: string; discount: number }) => ({
+    code: c.code,
+    discount: String(c.discount),
+    status: "✅ Valid",
+  })) || propCoupons || [];
 
   // Default coupons (only shown if not already present)
   const defaultCoupons = [
