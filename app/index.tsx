@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-
-import CouponData from "../app-example/components/CouponData";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import CouponData from "./_components/CouponData";
+import RandomCouponGenerator from "./_components/RandomCouponGenerator";
 
 export default function Index() {
   return (
@@ -9,19 +9,17 @@ export default function Index() {
       <Text style={styles.header}>🎟 Coupon Generator App</Text>
       <Text style={styles.subHeader}>Welcome to your Coupon Center!</Text>
 
-      {/* Display Coupon Data */}
+      {/* Random Coupon Generator Section */}
+      <View style={styles.section}>
+        <RandomCouponGenerator />
+      </View>
+
+      {/* Coupon Data Section */}
       <View style={styles.section}>
         <CouponData />
       </View>
 
-      {/* Placeholder for future RandomCouponGenerator component */}
-      <View style={styles.section}>
-        <Text style={styles.infoText}>
-          Random Coupon Generator feature coming soon! 
-        </Text>
-      </View>
-
-      <Text style={styles.footer}>Developed by Team Ninja - Epsilon </Text>
+      <Text style={styles.footer}>Developed by Team Ninja - Epsilon</Text>
     </ScrollView>
   );
 }
@@ -31,11 +29,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F5F7FA",
+    backgroundColor: "#F0F4F8",
     padding: 20,
   },
   header: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
     color: "#1E88E5",
     marginBottom: 10,
@@ -43,30 +41,25 @@ const styles = StyleSheet.create({
   },
   subHeader: {
     fontSize: 16,
-    color: "#333",
-    marginBottom: 20,
+    color: "#555",
+    marginBottom: 25,
     textAlign: "center",
   },
   section: {
     width: "100%",
     marginVertical: 15,
     backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 12,
+    padding: 20,
+    borderRadius: 15,
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  infoText: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
+    shadowRadius: 6,
+    elevation: 4,
   },
   footer: {
     fontSize: 14,
-    color: "#999",
-    marginTop: 20,
+    color: "#888",
+    marginTop: 25,
     textAlign: "center",
   },
 });
