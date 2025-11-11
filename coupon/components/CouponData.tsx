@@ -5,70 +5,9 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
-import { useCouponContext } from "../../context/CouponContext"; // ✅ import context hook
-
-export default function CouponData() {
-  const [discount, setDiscount] = useState("");
-  const [code, setCode] = useState("");
-  const { addToCouponHistory } = useCouponContext(); // ✅ get addToCouponHistory from context
-
-  // Generate random coupon code
-  const generateRandomCode = () => {
-    const randomCode =
-      "CPN-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-    setCode(randomCode);
-  };
-
-  // Add coupon using context
-  const handleAddCoupon = () => {
-    if (!code || !discount) {
-      alert("⚠ Please generate a code and enter discount");
-      return;
-    }
-
-    const newCoupon = {
-      code,
-      discount: Number(discount),
-    };
-
-    addToCouponHistory(newCoupon); // add to global state
-
-    setCode("");
-    setDiscount("");
-  };
-
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <Text style={styles.header}>🎟 Generate Coupons</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Enter discount percentage (e.g. 10)"
-        keyboardType="numeric"
-        value={discount}
-        onChangeText={setDiscount}
-        placeholderTextColor="#777"
-      />
-
-      <TouchableOpacity style={styles.buttonBlue} onPress={generateRandomCode}>
-        <Text style={styles.buttonText}>Generate Random Code</Text>
-      </TouchableOpacity>
-
-      {code ? (
-        <Text style={styles.generatedCode}>Generated Code: {code}</Text>
-      ) : null}
-
-      <TouchableOpacity style={styles.buttonGreen} onPress={handleAddCoupon}>
-        <Text style={styles.buttonText}>Add Coupon</Text>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
-  );
-}
+import { useCouponContext } from "../../context/CouponContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -122,3 +61,62 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+export default function CouponData() {
+  const [discount, setDiscount] = useState("");
+  const [code, setCode] = useState("");
+  const { addCoupon } = useCouponContext();
+
+  const generateRandomCode = () => {
+    const randomCode =
+      "CPN-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+    setCode(randomCode);
+  };
+
+  const handleAddCoupon = () => {
+    if (!code || !discount) {
+      alert("⚠ Please generate a code and enter discount");
+      return;
+    }
+
+    const newCoupon = {
+      code,
+      discount: String(discount),
+      status: "✅ Valid",
+    };
+
+    addCoupon(newCoupon);
+    setCode("");
+    setDiscount("");
+  };
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <Text style={styles.header}>🎟 Generate Coupons</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter discount percentage (e.g. 10)"
+        keyboardType="numeric"
+        value={discount}
+        onChangeText={setDiscount}
+        placeholderTextColor="#777"
+      />
+
+      <TouchableOpacity style={styles.buttonBlue} onPress={generateRandomCode}>
+        <Text style={styles.buttonText}>Generate Random Code</Text>
+      </TouchableOpacity>
+
+      {code ? (
+        <Text style={styles.generatedCode}>Generated Code: {code}</Text>
+      ) : null}
+
+      <TouchableOpacity style={styles.buttonGreen} onPress={handleAddCoupon}>
+        <Text style={styles.buttonText}>Add Coupon</Text>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
+  );
+}

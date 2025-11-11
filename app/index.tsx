@@ -1,43 +1,50 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import CouponDisplay from "../coupon/components/CouponDisplay";
+import { CouponProvider } from "../context/CouponContext";
 import CouponData from "../coupon/components/CouponData";
+import CouponDisplay from "../coupon/components/CouponDisplay";
 import RandomCouponGenerator from "../coupon/components/RandomCouponGenerator";
-import { CouponProvider } from "../context/CouponContext"; // ✅ Context wrapper
+
+// ✅ Inner component to render the app inside the provider
+function CouponAppContent() {
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* Header Section */}
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>🎟 Coupon Generator App</Text>
+        <Text style={styles.subHeader}>
+          Welcome to your Coupon Center! Explore exciting offers below 👇
+        </Text>
+      </View>
+
+      {/* Coupon Display */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>💥 Active Coupons</Text>
+        <CouponDisplay />
+      </View>
+
+      {/* Coupon Data (Manual Creation) */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>💾 Create Custom Coupon</Text>
+        <CouponData />
+      </View>
+
+      {/* Random Coupon Generator */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>🎲 Random Coupon Generator</Text>
+        <RandomCouponGenerator />
+      </View>
+
+      {/* Footer */}
+      <Text style={styles.footer}>Developed by Team Ninja – Epsilon 💪</Text>
+    </ScrollView>
+  );
+}
 
 export default function App() {
   return (
     <CouponProvider>
-      <ScrollView contentContainerStyle={styles.container}>
-        {/* Header Section */}
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}>🎟 Coupon Generator App</Text>
-          <Text style={styles.subHeader}>
-            Welcome to your Coupon Center! Explore exciting offers below 👇
-          </Text>
-        </View>
-
-        {/* Coupon Display */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>💥 Active Coupons</Text>
-          <CouponDisplay />
-        </View>
-
-        {/* Coupon Data (Manual Creation) */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>💾 Create Custom Coupon</Text>
-          <CouponData />
-        </View>
-
-        {/* Random Coupon Generator */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🎲 Random Coupon Generator</Text>
-          <RandomCouponGenerator />
-        </View>
-
-        {/* Footer */}
-        <Text style={styles.footer}>Developed by Team Ninja – Epsilon 💪</Text>
-      </ScrollView>
+      <CouponAppContent />
     </CouponProvider>
   );
 }

@@ -1,51 +1,33 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useCouponContext } from "../../context/CouponContext";
 
-interface Props {
-  coupons?: Array<{ code: string; discount: string; status: string }>;
-}
-
-export default function CouponDisplay({ coupons: propCoupons }: Props = {}) {
-  // Try to get coupons from context, fallback to props
-  const context = useCouponContext();
-  // the context exposes `couponHistory` and `generatedCoupon`; use couponHistory
-  const coupons = context?.couponHistory?.map((c: { code: string; discount: number }) => ({
-    code: c.code,
-    discount: String(c.discount),
-    status: "✅ Valid",
-  })) || propCoupons || [];
-
-  // Default coupons (only shown if not already present)
-  const defaultCoupons = [
-    { code: "SAVE10", discount: "10", status: "✅ Valid" },
-    { code: "WELCOME20", discount: "20", status: "✅ Valid" },
-    { code: "FREESHIP", discount: "0", status: "✅ Valid - Free Shipping" },
-  ];
-
-  // Merge default + dynamic coupons while avoiding duplicates by code
-  const allCoupons = [
-    ...defaultCoupons,
-    ...coupons.filter(
-      (coupon: { code: string }) => !defaultCoupons.some((d) => d.code === coupon.code)
-    ),
-  ];
+export default function CouponDisplay() {
+  const { coupons, redeemCoupon } = useCouponContext();
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>🎉 Active Coupons</Text>
 
-      {allCoupons.length === 0 ? (
+      {coupons.length === 0 ? (
         <Text style={styles.noCoupons}>No coupons available</Text>
       ) : (
-        allCoupons.map((coupon, index) => (
+        coupons.map((coupon, index) => (
           <View key={index} style={styles.card}>
             <Text style={styles.code}>Code: {coupon.code}</Text>
             <Text style={styles.discount}>
-              Discount: {coupon.discount}%
-              {coupon.discount === "0" && " (Free Shipping)"}
+              Discount: {coupon.discount}%{coupon.discount === "0" && " (Free Shipping)"}
             </Text>
             <Text style={styles.status}>{coupon.status}</Text>
+
+            {!coupon.redeemed && (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => redeemCoupon(coupon.code)}
+              >
+                <Text style={styles.buttonText}>Redeem</Text>
+              </TouchableOpacity>
+            )}
           </View>
         ))
       )}
@@ -100,5 +82,16 @@ const styles = StyleSheet.create({
   status: {
     fontSize: 14,
     color: "#555",
+  },
+  button: {
+    backgroundColor: "#1E88E5",
+    paddingVertical: 8,
+    borderRadius: 6,
+    marginTop: 8,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

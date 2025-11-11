@@ -9,7 +9,7 @@ import textStyles from "./styles/textStyles";
 export default function RandomCouponGenerator() {
   const [coupon, setCoupon] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
-  const { addToCouponHistory } = useCouponContext(); // ✅ use context function
+  const { addCoupon } = useCouponContext(); // ✅ updated function name
 
   // Generate random 8-character coupon
   const generateCoupon = () => {
@@ -19,10 +19,12 @@ export default function RandomCouponGenerator() {
     // Random discount between 5–50%
     const randomDiscount = Math.floor(Math.random() * 46 + 5).toString();
 
-    // Add to global coupon list (convert discount to number)
-    addToCouponHistory({
+    // ✅ Add new coupon using updated context
+    addCoupon({
       code: newCoupon,
-      discount: Number(randomDiscount),
+      discount: randomDiscount,
+      status: "✅ Valid",
+      redeemed: false,
     });
 
     Alert.alert("🎉 Coupon Generated", `Code: ${newCoupon} | Discount: ${randomDiscount}%`);
